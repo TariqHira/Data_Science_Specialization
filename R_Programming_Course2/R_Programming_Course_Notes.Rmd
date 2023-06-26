@@ -1,0 +1,118 @@
+---
+title: 'R Programming | Course #2 of Data Science Specialization by Johns Hopkins'
+author: "Hira Tariq"
+date: "2023-06-24"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Week 1: R Data_Types
+
+* **Vectors** Declaration: `a <- c(1,2,3,5)`; Indexing: `a[n]`
+
+* **Matrices** `m <- matrix(1:4, nrow = 2, ncol = 2)`; Indexing: `matrix[row, col]`
+<input type=button class=hideshow></input>
+  + Matrices are vectors with Dimension attributes (so we can use dim() function on matrices as well) 
+  + Matrix Declaration (Note: Matrix is constructed Column-wise, columns are filled first)
+  + Matrix Attributes & Indexing
+  + We can create Matrix from a vector as well by creating dimensions after declaration
+  + We can create Matrix through Column and Row Binding of vectors using cbind(); rbind functions
+
+
+```{r,  collapse = TRUE}
+m <- matrix(1:4, nrow = 2, ncol = 2)
+m
+attributes(m)
+# Dim() outputs a vector of length 2 
+m[1,1]
+m[1,]
+
+Vec <- 1:10
+# now adding dimensions
+Vec
+dim(Vec) <- c(2,5)
+Vec
+
+c1 <- 1:3
+c2 <- 13:15
+matrix_c12 <- cbind(c1,c2)
+matrix_c12
+attributes(matrix_c12)
+matrix_r12 <- rbind(c1,c2)
+matrix_r12
+attributes(matrix_r12)
+```
+
+* **Factors** to store Categorical Data; has labels underneath; has use cases in modeling funcions like lm(), glm() etc.
+
+```{r, collapse = TRUE}
+x <- factor(c("Male", "Female", "Male", "Female", "Female", "Female"))
+print(x)
+table(x)
+
+unclass(x)
+
+x <- factor(c("Male", "Female", "Male", "Female", "Female", "Female"), levels = c("Male", "Female"))
+x
+table(x)
+unclass(x)
+
+```
+* Remove NA/ Missing Values --> **is.na()** & sub-setting through **complete.cases()** function
+<input type=button class=hideshow></input>
+  + **is.na(x)**: outputs logical vector of TRUE FALASE; TRUE wherever there is a missing value --> !is.na() will convert FALSE to TRUE
+```{r, collapse= TRUE}
+x <- c(1,2,4, NA, NaN, 5, NA, NULL, 6)
+is.na(x)
+# Notice: Here NULL is not being treated as a missing value or anything, it's just not part of the vector thus vector size here is 8 instead of 9
+length(x)
+# Use cases of is.na() to exclude missing values 
+x[is.na(x)]
+x[!is.na(x)]
+
+# Missing Value Count
+length(x[is.na(x)])
+# Length of x excluding missing values
+length(x[!is.na(x)])
+```
+  + **complete.cases(x,y)**: will output TRUE where x & y both have non-missing values -> use cases could be where we are trying multiple features in the model and we want to check for their correlations may be
+```{r, collapse=TRUE}
+# --------------------------- Example of Subsetting out Missing Values from the Dataset ------------------------------
+x <- c(1,2,3,NA, NaN, 6, 7)
+y <- c(1, NA, 3, 4, NaN, 6, NA)
+complete.cases(x,y)
+x[complete.cases(x,y)]
+y[complete.cases(x,y)]
+
+airquality[1:6,]
+complete.cases(airquality[1:6,])
+airquality[complete.cases(airquality[1:6,]),]
+airquality[complete.cases(airquality[1:6,]),][1:6,]
+
+```
+  
+
+
+
+
+<script>
+$( "input.hideshow" ).each( function ( index, button ) {
+  button.value = 'Hide';
+  $( button ).click( function () {
+    var target = this.nextSibling ? this : this.parentNode;
+    target = target.nextSibling.nextSibling;
+    if ( target.style.display == 'block' || target.style.display == '' ) {
+      target.style.display = 'none';
+      this.value = 'Show';
+    } else {
+      target.style.display = 'block';
+      this.value = 'Hide';
+    }
+  } );
+} );
+</script>

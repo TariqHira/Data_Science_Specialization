@@ -1,0 +1,13 @@
+---
+title: 'Data Cleaning Course # 3 _ R Specialization _ Course Notes'
+author: "Hira Tariq"
+date: "2023-06-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Analysis
+
